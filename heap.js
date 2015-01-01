@@ -27,9 +27,12 @@ Heap.prototype._compar = function Heap__compar( i, j ) {
     return this._comparFunc(this._list[i], this._list[j]);
 }
 
-Heap.prototype._bubbleUp = function Heap__bubbleUp( idx ) {
+Heap.prototype.put = function Heap_put( item ) {
+    var len = this.length += 1;
     var list = this._list;
-    var compar = this._comparFunc;
+    list[len] = item;
+
+    var idx = len, compar = this._comparFunc;
     while (idx > 1) {
         var parent = idx / 2 | 0;
         if (compar(list[idx], list[parent]) < 0) {
@@ -38,65 +41,10 @@ Heap.prototype._bubbleUp = function Heap__bubbleUp( idx ) {
         }
         else return;
     }
-}
-
-// compare parent i, left child j, right child k, return index of smallest
-Heap.prototype._min3 = function Heap__min3( i, j, k ) {
-    if (j > this.length) return i;
-    if (k > this.length) return this._compar(i, j) <= 0 ? i : j;
-    //if (this._list[j] === undefined) return i;
-    //if (this._list[k] === undefined) return this._compar(i, j) <= 0 ? i : j;
-
-    if (this._compar(i, j) <= 0) {
-        return this._compar(i, k) <= 0 ? i : k;
-    }
-    else {
-        // j or k
-        return this._compar(j, k) <= 0 ? j : k;
-    }
-}
-
-Heap.prototype._bubbleDown = function Heap__bubbleDown( idx ) {
-    var self = this;
-    var list = this._list;
-    var compar = function(i, j) { self._comparFunc(list[i], list[j]); }
-    var len = this.length;
-
-    while (true) {
-        if (2*idx+1 <= len && compar(2*idx+1, idx) < 0) {
-            if (compar(2*idx, 2*idx+1) < 0) {
-                this._swap(idx, 2*idx);
-                idx = 2*idx;
-            }
-            else {
-                this._swap(idx, 2*idx+1);
-                idx = 2*idx+1;
-            }
-        }
-        else if (2*idx <= len && compar(2*idx, idx) < 0) {
-            this._swap(idx, 2*idx);
-            idx = 2*idx;
-        }
-        else return;
-
-        /** this version is simpler, but slower
-        var min = this._min3(idx, 2*idx, 2*idx+1);
-        if (min === idx) return;
-        else this._swap(min, idx);
-        idx = min;
-        /**/
-    }
-}
-
-Heap.prototype.put = function Heap_put( item ) {
-    var len = this.length += 1;
-    this._list[len] = item;
-    this._bubbleUp(len);
 };
 Heap.prototype.insert = Heap.prototype.put;
 Heap.prototype.append = Heap.prototype.put;
 Heap.prototype.push = Heap.prototype.put;
-Heap.prototype.queue = Heap.prototype.put;
 
 Heap.prototype.peek = function Heap_peek( ) {
     if (this.length < 1) return null;
@@ -118,7 +66,27 @@ Heap.prototype.get = function Heap_get( ) {
         list[1] = list[len];
         list[len] = undefined;
         this.length = len - 1;
-        this._bubbleDown(1);
+
+        var idx = 1;
+        var comparfn = this._comparFunc;
+        var compar = function(i, j) { comparfn(list[i], list[j]); }
+        while (true) {
+            if (2*idx+1 <= len && compar(2*idx+1, idx) < 0) {
+                if (compar(2*idx, 2*idx+1) < 0) {
+                    this._swap(idx, 2*idx);
+                    idx = 2*idx;
+                }
+                else {
+                    this._swap(idx, 2*idx+1);
+                    idx = 2*idx+1;
+                }
+            }
+            else if (2*idx <= len && compar(2*idx, idx) < 0) {
+                this._swap(idx, 2*idx);
+                idx = 2*idx;
+            }
+            else break;
+        }
     }
 
     if (len > 10000 && list.length > 4 * len) {
@@ -130,7 +98,6 @@ Heap.prototype.get = function Heap_get( ) {
 };
 Heap.prototype.remove = Heap.prototype.get;
 Heap.prototype.shift = Heap.prototype.get;
-Heap.prototype.dequeue = Heap.prototype.get;
 
 
 Heap.prototype._check = function Heap__check( ) {
