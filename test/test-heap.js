@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) 2014 Andras Radics
+ * Licensed under the Apache License, Version 2.0
+ */
+
 var assert = require('assert');
 
 var Heap = require('../index.js');
@@ -6,6 +11,13 @@ module.exports = {
     setUp: function(done) {
         this.cut = new Heap();
         done();
+    },
+
+    'package.json should parse': function(t) {
+        t.expect(1);
+        var json = require('../package.json');
+        t.ok(json.main);
+        t.done();
     },
 
     'empty heap should return null': function(t) {
