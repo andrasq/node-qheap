@@ -3,6 +3,9 @@
  *
  * Items are stored in a balanced binary tree packed into an array where
  * tree where node is at [i], left child is at [2*i], right at [2*i+1].
+ *
+ * Copyright (C) 2014 Andras Radics
+ * Licensed under the Apache License, Version 2.0
  */
 
 'use strict';
