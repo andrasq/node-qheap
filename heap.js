@@ -66,7 +66,7 @@ Heap.prototype.get = function Heap_get( ) {
     else {
         list[1] = list[len];
         list[len] = undefined;
-        this.length = len - 1;
+        len = this.length = len - 1;
 
         var idx = 1;
         var comparfn = this._comparFunc;
