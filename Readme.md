@@ -5,9 +5,6 @@ fast heap / priority queue / ordered list
 
 Qheap is a classic heap.  It was written to be fast and efficient; it is 2-3x
 faster than [heap](https://www.npmjs.com/package/heap) for 150 items or more.
-It is close to [dequeue](https://www.npmjs.com/package/double-ended-queue) but
-qheap also sorts the data.  (This probably says more about nodejs than about
-qheap or dequeue, actually).
 
 A heap is partially ordered balanced binary tree with the property that the
 value at the root comes before any value in either the left or right subtrees.
@@ -43,8 +40,8 @@ Options:
                   function should return a value less than zero if the first
                   argument should be ordered before the second (compatible
                   with the function passed to `sort()`).
-                  The default ordering is numerically increasing as determined
-                  by subtraction:  `function(a,b){ return a - b }`
+                  The default ordering if no compar is specified is by `<`:
+                  `function(a,b){ return a < b ? -1 : 1 }`
 
 ### insert( item )
 
@@ -69,6 +66,6 @@ is a read-only property, it must not be changed.
 Related Work
 ------------
 
-[js-priority-queue](https://www.npmjs.com/package/js-priority-queue)
-[dequeue](https://www.npmjs.com/package/double-ended-queue)
-[heap](https://www.npmjs.com/package/heap)
+- [heap](https://www.npmjs.com/package/heap)
+- [js-priority-queue](https://www.npmjs.com/package/js-priority-queue)
+- [qlist](https://www.npmjs.com/package/qlist)

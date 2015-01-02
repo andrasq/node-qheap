@@ -1,1 +1,1 @@
-module.exports = require('./heap.js');
+module.exports = require('./lib/qheap.js');
