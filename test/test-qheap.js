@@ -20,6 +20,18 @@ module.exports = {
         t.done();
     },
 
+    'should expose insert/remove methods': function(t) {
+        this.cut.insert(1);
+        t.equal(this.cut.remove(), 1);
+        t.done();
+    },
+
+    'should expose push/shift methods': function(t) {
+        this.cut.push(1);
+        t.equal(this.cut.shift(), 1);
+        t.done();
+    },
+
     'empty heap should return null': function(t) {
         assert.equal(this.cut.remove(), null);
         t.done();
