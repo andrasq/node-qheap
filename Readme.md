@@ -36,12 +36,15 @@ create a new empty heap.
 
 Options:
 
-        compar  - comparison function to determine the item ordering.  The
-                  function should return a value less than zero if the first
-                  argument should be ordered before the second (compatible
-                  with the function passed to `sort()`).
-                  The default ordering if no compar is specified is by `<`:
-                  `function(a,b){ return a < b ? -1 : 1 }`
+    compar: comparison function to determine the item ordering.  The function
+        should return a value less than zero if the first argument should be
+        ordered before the second (compatible with the function passed to
+        `sort()`).  The default ordering if no compar is specified is by `<`:
+        `function(a,b){ return a < b ?  -1 : 1 }`
+
+    freeSpace: when the heap shrinks to 1/4 its high-water mark, reallocate
+        the storage space to free the unused memory, and reset the high-water
+        mark.  Default is false, avoiding the overhead of the array slice.
 
 ### insert( item )
 
@@ -51,11 +54,12 @@ only the `compar` function needs to know the actual type.
 ### remove( )
 
 remove and return the item at the root of the heap (the next item in the
-sequence), and rebalance the tree.
+sequence), and rebalance the tree.  When empty, returns `undefined`.
 
 ### peek( )
 
-return the item at the root of the heap, but do not remove it.
+return the item at the root of the heap, but do not remove it.  When empty,
+returns `undefined`.
 
 ### length
 

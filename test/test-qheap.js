@@ -46,12 +46,16 @@ module.exports = {
 
     'should sort the data': function(t) {
         var i, data = [580, 253, 610, 176];
-        for (i=0; i<100000; i++) data[i] = Math.random() * 1000 | 0;
-        for (var i in data) {
+        for (i=0; i<100000; i++) {
+            data[i] = Math.random() * 1000 | 0;
             this.cut.put(data[i]);
         }
         var ok = this.cut._check();
         t.ok(ok);
+        t.equal(this.cut.length, data.length);
+        var item = this.cut.get();
+        while (this.cut.peek() !== undefined) { var x = this.cut.get(); assert(x >= item); item = x; }
+        t.equal(this.cut.length, 0);
         t.done();
     },
 };
