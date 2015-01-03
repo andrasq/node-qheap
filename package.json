@@ -1,6 +1,6 @@
 {
   "name": "qheap",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "very fast binary heap priority queue",
   "license": "Apache-2.0",
   "repository": {
