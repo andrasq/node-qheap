@@ -48,13 +48,13 @@ module.exports = {
         var i, data = [580, 253, 610, 176];
         for (i=0; i<100000; i++) {
             data[i] = Math.random() * 1000 | 0;
-            this.cut.put(data[i]);
+            this.cut.insert(data[i]);
         }
         var ok = this.cut._check();
         t.ok(ok);
         t.equal(this.cut.length, data.length);
-        var item = this.cut.get();
-        while (this.cut.peek() !== undefined) { var x = this.cut.get(); assert(x >= item); item = x; }
+        var item = this.cut.remove();
+        while (this.cut.peek() !== undefined) { var x = this.cut.remove(); assert(x >= item); item = x; }
         t.equal(this.cut.length, 0);
         t.done();
     },
