@@ -56,6 +56,14 @@ module.exports = {
         t.done();
     },
 
+    'should remove sorted elements in order': function(t) {
+        var i, data = [ 1420347223875, 1420347223878, 1420347223879, 1420347223880, 1420347223918 ];
+        this.cut.length = data.length;
+        for (i=0; i<data.length; i++) this.cut._list[i+1] = data[i];
+        for (i=0; i<data.length; i++) t.equal(this.cut.remove(), data[i]);
+        t.done();
+    },
+
     'should sort the data': function(t) {
         var i, data = [580, 253, 610, 176];
         for (i=0; i<100000; i++) {
