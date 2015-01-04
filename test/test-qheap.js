@@ -73,6 +73,7 @@ module.exports = {
         var ok = this.cut._check();
         t.ok(ok);
         t.equal(this.cut.length, data.length);
+        // FIXME: this loop does not detect incorrect orderings...
         var item = this.cut.remove();
         while (this.cut.peek() !== undefined) { var x = this.cut.remove(); assert(x >= item); item = x; }
         t.equal(this.cut.length, 0);

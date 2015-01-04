@@ -1,57 +1,23 @@
 qheap
 =====
 
-fast heap / priority queue / ordered list
+heap / priority queue / ordered list
 
-Qheap is a classic heap.  It's fairly quick, 5x faster than
-[heap](https://www.npmjs.com/package/heap) for larger data sets.
+Qheap is a classic heap.
 
 A heap is partially ordered balanced binary tree with the property that the
 value at the root comes before any value in either the left or right subtrees.
 It supports two operations, insert and remove, both O(log n) (and peek, O(1)).
 The tree can be efficiently mapped into an array: the root at offset `[1]` and
-each node at `[n]` having children left at `[2*n]` and right at `[2*n + 1]`.
+each node at `[n]` having children Left at `[2*n]` and Right at `[2*n + 1]`.
 
         var Heap = require('qheap');
-        var h = new Heap({compar: function(a, b) { return a < b ? -1 : 1; }});
+        var h = new Heap();
         h.insert('c');
         h.insert('a');
         h.insert('b');
         h.remove();     // => 'a'
 
-
-Installation
-------------
-
-        npm install qheap
-        npm test qheap
-
-
-Benchmark
----------
-
-        Heap = require('qheap');
-        nloops = 100000;
-
-        function fptime() { t = process.hrtime(); return t[0] * 1000 + t[1] * 1e-6; }
-        for (i=0; i<1000; i++) x = fptime();
-
-        // for (i=0; i<nloops; i++) q = new Heap();    // churn?
-
-        q = new Heap();
-        t1 = fptime();
-        for (i=0; i<nloops; i++) q.insert(Math.random() * 1000000 | 0);
-        for (i=0; i<nloops; i++) x = q.remove();
-        t2 = fptime();
-
-        // measured times, in ms:
-        //                      1k      10k     100k    1m      10m
-        // qheap                0.76    3.28    14.9    85      910
-        // heap                 1.96    4.13    29.3    425     7100
-        // js-priority-queue    1.97    4.81*   36.3*   445*    7200
-
-* - js-priority-queue is sensitive to the state of gc.  If the line marked `//
-churn?` is commented in, runtimes increase 65%
 
 Api
 ---
