@@ -66,7 +66,8 @@ module.exports = {
 
     'should sort the data': function(t) {
         var i, data = [580, 253, 610, 176];
-        for (i=0; i<100000; i++) {
+        var nitems = 100000;
+        for (i=0; i<nitems; i++) {
             data[i] = Math.random() * 1000 | 0;
             this.cut.insert(data[i]);
         }
@@ -75,7 +76,13 @@ module.exports = {
         t.equal(this.cut.length, data.length);
         // FIXME: this loop does not detect incorrect orderings...
         var item = this.cut.remove();
-        while (this.cut.peek() !== undefined) { var x = this.cut.remove(); assert(x >= item); item = x; }
+        for (i=1; i<nitems; i++) {
+            var x = this.cut.remove();
+            //assert(x >= item, i + ": " + x + " should be >= " + item);
+            assert(x >= item);
+            item = x;
+        }
+        t.equal(this.cut.remove(), undefined);
         t.equal(this.cut.length, 0);
         t.done();
     },
