@@ -32,8 +32,29 @@ module.exports = {
         t.done();
     },
 
-    'empty heap should return null': function(t) {
-        assert.equal(this.cut.remove(), null);
+    'empty heap should return undefined': function(t) {
+        assert(this.cut.remove() === undefined);
+        t.done();
+    },
+
+    'peek should return the first item or undefined': function(t) {
+        this.cut.insert(2);
+        t.equal(2, this.cut.peek());
+        this.cut.insert(1);
+        t.equal(1, this.cut.peek());
+        this.cut.remove();
+        t.equal(2, this.cut.peek());
+        this.cut.remove();
+        assert(this.cut.peek() === undefined);
+        t.done();
+    },
+
+    'should update length on insert and remove': function(t) {
+        t.equal(0, this.cut.length);
+        this.cut.insert(1);
+        t.equal(1, this.cut.length);
+        this.cut.remove();
+        t.equal(0, this.cut.length);
         t.done();
     },
 
@@ -44,7 +65,7 @@ module.exports = {
         this.cut.insert(3);
         assert.equal(this.cut.remove(), 2);
         assert.equal(this.cut.remove(), 3);
-        assert.equal(this.cut.remove(), null);
+        assert(this.cut.remove() === undefined);
         t.done();
     },
 
