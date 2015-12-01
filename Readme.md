@@ -65,6 +65,7 @@ is a read-only property, it must not be changed.
 Related Work
 ------------
 
-- [heap](https://www.npmjs.com/package/heap)
-- [js-priority-queue](https://www.npmjs.com/package/js-priority-queue)
+- [heap](https://www.npmjs.com/package/heap) - the classic, but slow
+- [js-priority-queue](https://www.npmjs.com/package/js-priority-queue) - fast
+- [fastpriorityqueue](https://www.npmjs.com/package/fastpriorityqueue) - very fast
 - [qlist](https://www.npmjs.com/package/qlist)
