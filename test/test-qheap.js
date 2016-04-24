@@ -107,4 +107,24 @@ module.exports = {
         t.equal(this.cut.length, 0);
         t.done();
     },
+
+    'fuzz test': function(t) {
+        for (var nitems=2; nitems<8; nitems++) {
+            for (var loop=0; loop<20000; loop++) {
+                var cut = new Heap();
+                for (var i=0; i<nitems; i++) {
+                    // bubbles up new value into correct position after insert
+                    cut.insert((Math.random() * 1000 + 1) >> 0);
+                    t.ok(cut._check());
+                    t.ok(cut.length, i+1);
+                }
+                for (var i=0; i<nitems; i++) {
+                    // bubbles down last element into correct position after remove
+                    cut.remove();
+                    t.ok(cut._check());
+                }
+            }
+        }
+        t.done();
+    },
 };

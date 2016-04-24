@@ -1,6 +1,6 @@
 {
   "name": "qheap",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "binary heap priority queue",
   "license": "Apache-2.0",
   "repository": {
@@ -16,7 +16,10 @@
     "node": "*"
   },
   "scripts": {
-    "test": "nodeunit"
+    "test": "qnit test/test-*"
+  },
+  "devDependencies": {
+    "qnit": "0.11.0"
   },
   "keywords": [
     "Andras",
