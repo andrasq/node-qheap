@@ -28,16 +28,20 @@ create a new empty heap.
 
 Options:
 
-`compar` : comparison function to determine the item ordering.  The function
+- `compar` : comparison function to determine the item ordering.  The function
 should return a value less than zero if the first argument should be ordered
 before the second (compatible with the function passed to `sort()`).  The
 default ordering if no compar is specified is by `<`:  `function(a,b){ return
 a < b ?  -1 : 1 }`
 
-`freeSpace` : when the heap shrinks to 1/4 its high-water mark, reallocate the
+- `freeSpace` : when the heap shrinks to 1/4 its high-water mark, reallocate the
 storage space to free the unused memory, and reset the high-water mark.
 Default is false, avoiding the overhead of the array slice.  Note: freeing
 space from the array halves the insert rate; use advisedly.
+
+- `size` : the initial capacity of the heap.  The heap is extended as needed,
+but for debugging dumps it can be useful to specify a smaller starting size than
+the default 100.
 
 ### insert( item ), push( item )
 

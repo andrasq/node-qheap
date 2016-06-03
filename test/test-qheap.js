@@ -85,6 +85,19 @@ module.exports = {
         t.done();
     },
 
+    'should sort 3 items': function(t) {
+        var datasets = [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ];
+        for (var i=0; i<datasets.length; i++) {
+            var data = datasets[i];
+            var q = new Heap({size: 4});
+            for (var j=0; j<3; j++) q.insert(data[j]);
+            t.equal(q.remove(), 1);
+            t.equal(q.remove(), 2);
+            t.equal(q.remove(), 3);
+        }
+        t.done();
+    },
+
     'should sort the data': function(t) {
         var i, data = [580, 253, 610, 176];
         var nitems = 100000;
@@ -111,7 +124,7 @@ module.exports = {
     'fuzz test': function(t) {
         for (var nitems=2; nitems<8; nitems++) {
             for (var loop=0; loop<20000; loop++) {
-                var cut = new Heap();
+                var cut = new Heap({size: 4});
                 for (var i=0; i<nitems; i++) {
                     // bubbles up new value into correct position after insert
                     cut.insert((Math.random() * 1000 + 1) >> 0);
@@ -121,7 +134,7 @@ module.exports = {
                 for (var i=0; i<nitems; i++) {
                     // bubbles down last element into correct position after remove
                     cut.remove();
-                    t.ok(cut._check());
+                    t.ok(cut._check(), "removing item #" + (i+1) + " with nitems " + nitems);
                 }
             }
         }
