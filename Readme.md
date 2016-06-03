@@ -43,6 +43,8 @@ space from the array halves the insert rate; use advisedly.
 but for debugging dumps it can be useful to specify a smaller starting size than
 the default 100.
 
+If options is a function, it is taken to be the comparison function `compar`.
+
 ### insert( item ), push( item )
 
 insert the item into the heap and rebalance the tree.  Item can be anything,
