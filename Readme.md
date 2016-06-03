@@ -1,9 +1,7 @@
 qheap
 =====
 
-heap / priority queue / ordered list
-
-Qheap is a classic heap.
+Qheap is a very fast classic heap / priority queue.
 
 A heap is partially ordered balanced binary tree with the property that the
 value at the root comes before any value in either the left or right subtrees.
@@ -68,10 +66,45 @@ the heap `length` property is the count of items currently in the heap.  This
 is a read-only property, it must not be changed.
 
 
+Performance
+-----------
+
+The [fastpriorityqueue](https://www.npmjs.com/package/fastpriorityqueue) repo
+includes a handy comparison test, it reports
+
+    Platform: linux 4.3.0-0.bpo.1-amd64 ia32
+    AMD Phenom(tm) II X4 B55 Processor
+    Node version 5.10.1, v8 version 4.6.85.31
+
+    Comparing against: 
+    js-priority-queue: https://github.com/adamhooper/js-priority-queue
+    heap.js: https://github.com/qiao/heap.js
+    binaryheapx: https://github.com/xudafeng/BinaryHeap
+    priority_queue: https://github.com/agnat/js_priority_queue
+    js-heap: https://github.com/thauburger/js-heap
+    queue-priority: https://github.com/augustohp/Priority-Queue-NodeJS
+    priorityqueuejs: https://github.com/janogonzalez/priorityqueuejs
+    qheap: https://github.com/andrasq/node-qheap
+    yabh: https://github.com/jmdobry/yabh
+
+    starting dynamic queue/enqueue benchmark
+    FastPriorityQueue x 13,941 ops/sec ±0.17% (101 runs sampled)
+    js-priority-queue x 3,282 ops/sec ±0.08% (103 runs sampled)
+    heap.js x 4,709 ops/sec ±0.15% (101 runs sampled)
+    binaryheapx x 2,775 ops/sec ±0.23% (101 runs sampled)
+    priority_queue x 1,980 ops/sec ±0.33% (101 runs sampled)
+    js-heap x 142 ops/sec ±0.10% (83 runs sampled)
+    queue-priority x 210 ops/sec ±1.38% (85 runs sampled)
+    priorityqueuejs x 3,673 ops/sec ±1.07% (86 runs sampled)
+    qheap x 14,636 ops/sec ±0.09% (101 runs sampled)
+    yabh x 3,200 ops/sec ±0.10% (101 runs sampled)
+    Fastest is qheap
+
+
 Related Work
 ------------
 
 - [heap](https://www.npmjs.com/package/heap) - the classic, but slow
-- [js-priority-queue](https://www.npmjs.com/package/js-priority-queue) - fast
-- [fastpriorityqueue](https://www.npmjs.com/package/fastpriorityqueue) - very fast
-- [qlist](https://www.npmjs.com/package/qlist)
+- [qheap, this](https://www.npmjs.org/package/qheap) - very fast heap and priority queue
+- [fastpriorityqueue](https://www.npmjs.com/package/fastpriorityqueue) - very fast, includes comprehensive list nodejs heaps
+- [qlist](https://www.npmjs.com/package/qlist) - very fast circular buffer
