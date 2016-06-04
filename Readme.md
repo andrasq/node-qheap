@@ -87,20 +87,19 @@ includes a handy comparison test, it reports
     qheap: https://github.com/andrasq/node-qheap
     yabh: https://github.com/jmdobry/yabh
 
-    starting dynamic queue/enqueue benchmark
-    FastPriorityQueue x 13,978 ops/sec ±0.25% (98 runs sampled)
-    js-priority-queue x 3,274 ops/sec ±0.08% (103 runs sampled)
-    heap.js x 4,718 ops/sec ±0.14% (102 runs sampled)
-    binaryheapx x 2,825 ops/sec ±0.25% (101 runs sampled)
-    priority_queue x 1,961 ops/sec ±0.52% (100 runs sampled)
-    js-heap x 142 ops/sec ±0.43% (84 runs sampled)
-    queue-priority x 165 ops/sec ±4.63% (73 runs sampled)
-    priorityqueuejs x 3,570 ops/sec ±0.65% (83 runs sampled)
-    qheap x 15,864 ops/sec ±0.08% (101 runs sampled)
-    yabh x 2,975 ops/sec ±0.19% (96 runs sampled)
+    FastPriorityQueue x 13,869 ops/sec ±0.31% (100 runs sampled)
+    js-priority-queue x 3,290 ops/sec ±0.07% (102 runs sampled)
+    heap.js x 4,762 ops/sec ±0.13% (100 runs sampled)
+    binaryheapx x 2,804 ops/sec ±0.41% (100 runs sampled)
+    priority_queue x 1,977 ops/sec ±0.52% (100 runs sampled)
+    js-heap x 141 ops/sec ±0.30% (83 runs sampled)
+    queue-priority x 244 ops/sec ±0.95% (92 runs sampled)
+    priorityqueuejs x 3,691 ops/sec ±0.75% (74 runs sampled)
+    qheap x 14,692 ops/sec ±0.11% (104 runs sampled)
+    yabh x 3,182 ops/sec ±0.26% (101 runs sampled)
     Fastest is qheap
 
-    54.300u 0.072s 0:54.12 100.4%	0+0k 200+0io 0pf+0w
+    54.568u 0.068s 0:54.47 100.2%   0+0k 0+0io 0pf+0w
 
 
 Related Work
