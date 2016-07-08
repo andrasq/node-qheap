@@ -26,6 +26,9 @@ create a new empty heap.
 
 Options:
 
+- `comparBefore`: a fast comparison function that returns true when the first
+argument should be sorted before the second.  This comparator runs much faster than
+the three-way `compar` below.  The default is `function(a,b) { return a < b }`.
 - `compar` : comparison function to determine the item ordering.  The function
 should return a value less than zero if the first argument should be ordered
 before the second (compatible with the function passed to `sort()`).  The

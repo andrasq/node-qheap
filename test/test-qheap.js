@@ -77,6 +77,14 @@ module.exports = {
         t.done();
     },
 
+    'heap should use user-provided comparBefore': function(t) {
+        var h = new Heap({comparBefore: function(a,b) { return b < a }});
+        h.insert(1);
+        h.insert(2);
+        assert.equal(h.remove(), 2);
+        t.done();
+    },
+
     'should remove sorted elements in order': function(t) {
         var i, data = [ 1420347223875, 1420347223878, 1420347223879, 1420347223880, 1420347223918 ];
         this.cut.length = data.length;
