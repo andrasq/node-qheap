@@ -46,13 +46,13 @@ the default 100.
 
 If options is a function, it is taken to be the comparison function `compar`.
 
-### insert( item ), push( item )
+### insert( item ), push( item ), enqueue( item )
 
 insert the item into the heap and rebalance the tree.  Item can be anything,
 only the `compar` function needs to know the actual type.
 Push is an alias for insert.
 
-### remove( ), shift( )
+### remove( ), shift( ), dequeue( )
 
 remove and return the item at the root of the heap (the next item in the
 sequence), and rebalance the tree.  When empty, returns `undefined`.
