@@ -1,7 +1,8 @@
 qheap
 =====
 
-<img src="https://api.travis-ci.org/andrasq/node-qheap.svg?branch=master">
+[![Build Status](https://api.travis-ci.org/andrasq/node-qheap.svg?branch=master)](https://travis-ci.org/andrasq/node-qheap)
+[![Coverage Status](https://coveralls.io/repos/github/andrasq/node-qheap/badge.svg)](https://coveralls.io/github/andrasq/node-qheap)
 
 Qheap is a very fast classic heap / priority queue.
 
