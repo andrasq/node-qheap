@@ -5,3 +5,8 @@ node_js:
   - 5
   - 6
   - 7
+install:
+  - npm install -g nyc
+  - npm install -g coveralls
+after_success:
+  - npm run coveralls

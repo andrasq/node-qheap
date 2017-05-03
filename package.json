@@ -16,7 +16,8 @@
     "node": "*"
   },
   "scripts": {
-    "test": "qnit test/test-*"
+    "test": "qnit test/test-*",
+    "coveralls": "nyc --reporter text-lcov npm run test | & coveralls"
   },
   "devDependencies": {
     "qnit": "0.11.0"
