@@ -1,6 +1,6 @@
 {
   "name": "qheap",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "binary heap priority queue",
   "license": "Apache-2.0",
   "repository": {
@@ -19,8 +19,9 @@
     "test": "qnit test/test-*",
     "coveralls": "nyc --reporter text-lcov npm run test | & coveralls"
   },
+  "dependencies": {
+  },
   "devDependencies": {
-    "qnit": "0.11.0"
   },
   "keywords": [
     "Andras",

@@ -6,6 +6,8 @@ node_js:
   - 6
   - 7
 install:
+  - npm install .
+  - npm install -g qnit
   - npm install -g nyc
   - npm install -g coveralls
 after_success:
