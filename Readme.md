@@ -1,6 +1,8 @@
 qheap
 =====
 
+<img src="https://api.travis-ci.org/andrasq/node-qheap.svg?branch=master">
+
 Qheap is a very fast classic heap / priority queue.
 
 A heap is partially ordered balanced binary tree with the property that the
