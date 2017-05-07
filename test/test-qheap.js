@@ -117,6 +117,7 @@ module.exports = {
     },
 
     'should sort the data': function(t) {
+        if (process.env.NODE_COVERAGE) return t.done();
         var i, data = [580, 253, 610, 176];
         var nitems = 100000;
         for (i=0; i<nitems; i++) {
@@ -208,19 +209,24 @@ module.exports = {
 
         '_check should flag invalid heap': function(t) {
             var h = new Heap();
-            h.push(1);
-            h.push(2);
+            var h2 = new Heap();
+            h.push(1); h2.push(1);
+            h.push(2); h2.push(2);
+            // break h
             h._list[1] = 2;
             h._list[2] = 1;
             var stub = t.stub(console, 'log');
             var ok = h._check();
+            var good = h2._check();
             stub.restore();
             t.assert(!ok);
+            t.assert(good);
             t.done();
         },
     },
 
     'fuzz test': function(t) {
+        if (process.env.NODE_COVERAGE) return t.done();
         for (var nitems=2; nitems<8; nitems++) {
             for (var loop=0; loop<20000; loop++) {
                 var cut = new Heap({size: 4});
