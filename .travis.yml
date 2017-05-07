@@ -8,7 +8,7 @@ node_js:
 install:
   - npm install .
   - npm install -g qnit
+after_success:
   - npm install -g nyc
   - npm install -g coveralls
-after_success:
   - npm run coveralls

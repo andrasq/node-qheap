@@ -58,6 +58,16 @@ module.exports = {
         t.done();
     },
 
+    // TODO: deprecate size()
+    'size should return length': function(t) {
+        t.equal(this.cut.size(), 0);
+        this.cut.push(1);
+        t.equal(this.cut.size(), 1);
+        this.cut.pop();
+        t.equal(this.cut.size(), 0);
+        t.done();
+    },
+
     'heap should return lesser of two': function(t) {
         this.cut.insert(2);
         this.cut.insert(1);
@@ -127,6 +137,87 @@ module.exports = {
         t.equal(this.cut.remove(), undefined);
         t.equal(this.cut.length, 0);
         t.done();
+    },
+
+    'options': {
+        'should accept comparator': function(t) {
+            var compar = t.spy();
+            var h = new Heap(compar);
+            h.push(1);
+            h.push(2);
+            t.equal(compar.stub.callCount, 1);
+            t.done();
+        },
+
+        'should accept freeSpace': function(t) {
+            var h = new Heap({ freeSpace: true });
+            t.ok(h._freeSpace);
+            t.done();
+        },
+
+        'if freeSpace should try to free on remove': function(t) {
+            var h = new Heap({ freeSpace: true });
+            var spy = t.spy(h, '_freeSpace');
+            h.push(1);
+            h.push(2);
+            h.remove();
+            t.equal(spy.callCount, 1);
+            t.done();
+        },
+
+        'should always set _isBefore': function(t) {
+            var fn = function(){};
+            var h1 = new Heap();
+            t.equal(typeof h1._isBefore, 'function');
+            var h2 = new Heap(fn);
+            t.equal(typeof h2._isBefore, 'function');
+            t.ok(h2._isBefore != fn);
+            var h3 = new Heap({ compar: fn });
+            t.equal(typeof h3._isBefore, 'function');
+            t.ok(h3._isBefore != fn);
+            var h4 = new Heap({ comparBefore: fn });
+            t.equal(h4._isBefore, fn);
+            t.done();
+        },
+    },
+
+    'helpers': {
+        '_trimArraySize should do nothing if array is small': function(t) {
+            var h = new Heap();
+            var list = new Array(100);
+            list[0] = 1234;
+            list[99] = 99;
+            h._trimArraySize(list, 1);
+            t.equal(list.length, 100);
+            t.equal(list[0], 1234);
+            t.equal(list[99], 99);
+            t.done();
+        },
+
+        '_trimArraySize should trim if array too large': function(t) {
+            var h = new Heap();
+            var list = new Array(40005);
+            list[0] = 1234;
+            list[10001] = 567;
+            h._trimArraySize(list, 10001);
+            t.equal(list.length, 10002);
+            t.equal(list[0], 1234);
+            t.equal(list[10001], 567);
+            t.done();
+        },
+
+        '_check should flag invalid heap': function(t) {
+            var h = new Heap();
+            h.push(1);
+            h.push(2);
+            h._list[1] = 2;
+            h._list[2] = 1;
+            var stub = t.stub(console, 'log');
+            var ok = h._check();
+            stub.restore();
+            t.assert(!ok);
+            t.done();
+        },
     },
 
     'fuzz test': function(t) {

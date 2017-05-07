@@ -16,8 +16,10 @@
     "node": "*"
   },
   "scripts": {
-    "test": "qnit test/test-*",
-    "coveralls": "nyc --reporter text-lcov npm run test | & coveralls"
+    "test": "qnit -t 10000 test/test-*",
+    "coverage": "nyc --reporter lcov --reporter text npm test",
+    "clean": "rm -rf .nyc_output coverage",
+    "coveralls": "nyc --reporter text-lcov npm test | & coveralls"
   },
   "dependencies": {
   },
