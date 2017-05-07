@@ -150,6 +150,19 @@ module.exports = {
             t.done();
         },
 
+        'should accept comparBefore': function(t) {
+            var cmp = function(){};
+            var h = new Heap({ comparBefore: cmp });
+            t.equal(h._isBefore, cmp);
+            t.done();
+        },
+
+        'should accept size': function(t) {
+            var h = new Heap({ size: 3 });
+            t.equal(h._list.length, 3);
+            t.done();
+        },
+
         'should accept freeSpace': function(t) {
             var h = new Heap({ freeSpace: true });
             t.ok(h._freeSpace);
