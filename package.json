@@ -18,8 +18,7 @@
   "scripts": {
     "test": "qnit -t 10000 test/test-*",
     "coverage": "env NODE_COVERAGE=1 nyc --reporter lcov --reporter text npm test",
-    "clean": "rm -rf .nyc_output coverage",
-    "coveralls": "env NODE_COVERAGE=1 nyc --reporter text-lcov npm test | & coveralls"
+    "clean": "rm -rf .nyc_output coverage"
   },
   "dependencies": {
   },

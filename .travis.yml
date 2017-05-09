@@ -10,5 +10,5 @@ install:
   - npm install -g qnit
 after_success:
   - npm install -g nyc
-  - npm install -g coveralls
-  - npm run coveralls
+  - npm install -g codecov
+  - nyc --reporter lcov npm test && codecov
