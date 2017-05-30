@@ -140,6 +140,41 @@ module.exports = {
         t.done();
     },
 
+    'gc': {
+
+        'should always gc if no options': function(t) {
+            var h = new Heap();
+            h.push(1);
+            h.gc();
+            t.equal(h._list.length, 2);
+            t.done();
+        },
+
+        'should gc if meet options': function(t) {
+            var h = new Heap({ size: 10 })
+            h.gc({ minLength: 0, minFull: 0.00001 });
+            t.equal(h._list.length, 1);     // list[0] is always present but is unused
+            t.done();
+        },
+
+        'should not gc if list is too small': function(t) {
+            var h = new Heap({ size: 10 });
+            h.gc({ minLength: 100 });
+            t.equal(h._list.length, 10);
+            t.done();
+        },
+
+        'should not gc if list utilization is high': function(t) {
+            var h = new Heap();
+            for (var i=0; i<20001; i++) h.push(i);
+            for (var i=0; i<5000; i++) h.shift();
+            h.gc({ minFull: 0.50 });
+            t.equal(h._list.length, 20002);
+            t.done();
+        },
+
+    },
+
     'options': {
         'should accept comparator': function(t) {
             var compar = t.spy();

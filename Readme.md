@@ -71,6 +71,18 @@ returns `undefined`.
 the heap `length` property is the count of items currently in the heap.  This
 is a read-only property, it must not be changed.
 
+### gc( [options] )
+
+Resize the storage array to free all unused array slots.  The options, if
+specified, control when to gc for more efficient operation.
+
+Options:
+
+- `minLength` - do not resize arrays smaller than this cutoff.
+  Default 0, resize even the smallest arrays.
+- `minFull` - do not resize arrays that are more full than this fraction.
+  Default 1.00, resize unless 100% full.
+
 
 Performance
 -----------
@@ -108,10 +120,17 @@ includes a handy comparison test, it reports
     54.568u 0.068s 0:54.47 100.2%   0+0k 0+0io 0pf+0w
 
 
+Todo
+----
+
+- might be more efficient to periodically gc the heap on a timer instead of checking
+  on every remove
+
+
 Related Work
 ------------
 
-- [heap](https://www.npmjs.com/package/heap) - the classic, but slow
+- [heap](https://www.npmjs.com/package/heap) - the classic, slow with custom comparator
 - [qheap, this](https://www.npmjs.org/package/qheap) - very fast heap and priority queue
 - [fastpriorityqueue](https://www.npmjs.com/package/fastpriorityqueue) - very fast, includes comprehensive list nodejs heaps
 - [qlist](https://www.npmjs.com/package/qlist) - very fast circular buffer
