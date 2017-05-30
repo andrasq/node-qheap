@@ -87,7 +87,7 @@ timeit.bench({
         for (i = 128; i < 1280; i++) { b.push(rand(i)) ; b.pop() }
     },
 **/
-    fastpriorityqueue_compar: function(){
+    fastpriorityqueue: function(){
         var i, b = new fastpriorityqueue(comparAfter);
         //var i, b = new fastpriorityqueue();
         for (i = 0; i < 128; i++) { b.add(rand(i)) }
@@ -123,5 +123,6 @@ timeit.bench({
 });
 timeit.bench.preRunMessage = "----";
 timeit.bench.showPlatformInfo = false;
+timeit.bench.showRunDetails = false;
 //timeit.bench.verbose = 1;
 }

@@ -87,37 +87,28 @@ Options:
 Performance
 -----------
 
-The [fastpriorityqueue](https://www.npmjs.com/package/fastpriorityqueue) repo
-includes a handy comparison test, it reports
+Running the `fastpriorityqueue` benchmark:
 
-    Platform: linux 4.3.0-0.bpo.1-amd64 ia32
-    AMD Phenom(tm) II X4 B55 Processor
-    Node version 5.10.1, v8 version 4.6.85.31
+    function rand(i) {
+        i = i + 10000;
+        i = i ^ (i << 16);
+        i = (i >> 5) ^ i ;
+        return i & 0xFF;
+    }
+    function testLoop() {
+        var i, b = new qheap();
+        for (i = 0; i < 128; i++) { b.insert(rand(i)) }
+        for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }
+    }
 
-    Comparing against: 
-    js-priority-queue: https://github.com/adamhooper/js-priority-queue
-    heap.js: https://github.com/qiao/heap.js
-    binaryheapx: https://github.com/xudafeng/BinaryHeap
-    priority_queue: https://github.com/agnat/js_priority_queue
-    js-heap: https://github.com/thauburger/js-heap
-    queue-priority: https://github.com/augustohp/Priority-Queue-NodeJS
-    priorityqueuejs: https://github.com/janogonzalez/priorityqueuejs
-    qheap: https://github.com/andrasq/node-qheap
-    yabh: https://github.com/jmdobry/yabh
-
-    FastPriorityQueue x 13,869 ops/sec ±0.31% (100 runs sampled)
-    js-priority-queue x 3,290 ops/sec ±0.07% (102 runs sampled)
-    heap.js x 4,762 ops/sec ±0.13% (100 runs sampled)
-    binaryheapx x 2,804 ops/sec ±0.41% (100 runs sampled)
-    priority_queue x 1,977 ops/sec ±0.52% (100 runs sampled)
-    js-heap x 141 ops/sec ±0.30% (83 runs sampled)
-    queue-priority x 244 ops/sec ±0.95% (92 runs sampled)
-    priorityqueuejs x 3,691 ops/sec ±0.75% (74 runs sampled)
-    qheap x 14,692 ops/sec ±0.11% (104 runs sampled)
-    yabh x 3,182 ops/sec ±0.26% (101 runs sampled)
-    Fastest is qheap
-
-    54.568u 0.068s 0:54.47 100.2%   0+0k 0+0io 0pf+0w
+    new heap + 128 inserts + 1152 insert/removes
+    qtimeit=0.19.0 node=6.10.2 v8=5.1.281.98 platform=linux kernel=3.16.0-4-amd64 up_threshold=11
+    arch=ia32 mhz=4419 cpuCount=8 cpu="Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz"
+    name                  speed           rate
+    jsprioqueue           6,037 ops/sec   1000 >>>>>
+    heap                 29,913 ops/sec   4955 >>>>>>>>>>>>>>>>>>>>>>>>>
+    fastpriorityqueue    38,264 ops/sec   6338 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    qheap                41,139 ops/sec   6814 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 Todo
