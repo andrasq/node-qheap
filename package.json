@@ -23,6 +23,8 @@
   "dependencies": {
   },
   "devDependencies": {
+    "qnit": "0.16.0",
+    "qtimeit": "0.19.0"
   },
   "keywords": [
     "Andras",
