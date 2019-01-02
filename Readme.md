@@ -111,6 +111,16 @@ Running the `fastpriorityqueue` benchmark:
     qheap                41,139 ops/sec   6814 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
+Changelog
+---------
+
+- 1.4.1 - minor speedups, backfill changelog
+- 1.4.0 - add test tools to devDependencies
+- 1.3.4 - 100% test coverage
+- 1.3.0 - `options.comparBefore` comparator, zero out removed array slots
+- 1.2.0 - allow a compar function instead of options, fix off-by-one
+
+
 Todo
 ----
 
