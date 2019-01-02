@@ -2,7 +2,7 @@ qheap
 =====
 
 [![Build Status](https://api.travis-ci.org/andrasq/node-qheap.svg?branch=master)](https://travis-ci.org/andrasq/node-qheap)
-[![Coverage Status](https://codecov.io/github/andrasq/node-qheap/coverage.svg?branch=master)](https://codecov.io/github/andrasq/node-qheap?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/andrasq/node-qheap/badge.svg?branch=master)](https://coveralls.io/github/andrasq/node-qheap?branch=master)
 
 Qheap is a very fast classic heap / priority queue.
 
