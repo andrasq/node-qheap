@@ -1,12 +1,13 @@
 language: node_js
 node_js:
+  - 0.8
   - 0.10
   - 4
   - 6
   - 8
-  - 9
   - 10
-  - 11
+  - 12
+  - 13
 after_success:
   - if [ `node -p 'process.version.slice(0, 3)'` != "v8." ]; then exit; fi
   - npm install -g nyc codecov coveralls
