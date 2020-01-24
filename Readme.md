@@ -83,6 +83,15 @@ Options:
 - `minFull` - do not resize arrays that are more full than this fraction.
   Default 1.00, resize unless 100% full.
 
+### toArray( )
+
+Return a snapshot of the raw, unsorted contents of the internal storage array.
+The returned array will be sized to the number of contained elements, 0 .. length - 1.
+
+The equivalent function to insert the contents of an array into the heap is just
+a loop over the elements:
+
+    array.forEach((e) => heap.insert(e));
 
 Performance
 -----------
@@ -114,6 +123,7 @@ Running the `fastpriorityqueue` benchmark:
 Changelog
 ---------
 
+- 1.5.0 - toArray method
 - 1.4.1 - minor speedups, backfill changelog
 - 1.4.0 - add test tools to devDependencies
 - 1.3.4 - 100% test coverage

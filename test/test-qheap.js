@@ -140,6 +140,19 @@ module.exports = {
         t.done();
     },
 
+    'should convert toArray': function(t) {
+        var l = new Heap();
+        t.deepEqual(l.toArray(), []);
+        l.insert(1);
+        t.deepEqual(l.toArray(), [1]);
+        l.insert(2);
+        t.deepEqual(l.toArray().sort(), [1, 2]);
+        l.insert(3);
+        l.insert(4);
+        t.deepEqual(l.toArray().sort(), [1, 2, 3, 4]);
+        t.done();
+    },
+
     'gc': {
 
         'should always gc if no options': function(t) {

@@ -1,6 +1,6 @@
 {
   "name": "qheap",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "binary heap priority queue",
   "license": "Apache-2.0",
   "repository": {
@@ -15,6 +15,8 @@
   "engines": {
     "node": "*"
   },
+  "readme": "see Readme.md",
+
   "scripts": {
     "test": "qnit -t 10000 test/test-*",
     "coverage": "env NODE_COVERAGE=1 nyc --reporter lcov --reporter text npm test",
