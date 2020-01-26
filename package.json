@@ -16,6 +16,7 @@
     "node": "*"
   },
   "readme": "see Readme.md",
+  "files": ["qheap.js", "LICENSE", "README.md"],
 
   "scripts": {
     "test": "qnit -t 10000 test-*",
