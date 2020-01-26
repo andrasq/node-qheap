@@ -29,7 +29,7 @@ function Heap( opts ) {
     }
     this.length = 0;
     this._freeSpace = opts.freeSpace ? this._trimArraySize : false;
-    this._list = new Array(opts.size || 100);
+    this._list = new Array(opts.size || 20);
 }
 
 Heap.prototype._list = null;
@@ -48,9 +48,8 @@ Heap.prototype.insert = function Heap_insert( item ) {
 
     while (idx > 1) {
         var parentidx = idx >> 1;
-        var parentval = list[parentidx];
-        if (!(this._isBefore(item, parentval))) break;
-        list[idx] = parentval;
+        if (!(this._isBefore(item, list[parentidx]))) break;
+        list[idx] = list[parentidx];
         idx = parentidx;
     }
     list[idx] = item;
