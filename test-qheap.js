@@ -32,6 +32,13 @@ module.exports = {
         t.done();
     },
 
+    'should construct both as function and as class': function(t) {
+        var qheap = require('./');
+        t.ok(qheap() instanceof Heap);
+        t.ok(new qheap() instanceof Heap);
+        t.done();
+    },
+
     'empty heap should return undefined': function(t) {
         assert(this.cut.remove() === undefined);
         t.done();
