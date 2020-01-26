@@ -83,22 +83,23 @@ Heap.prototype.size = function Heap_size( ) {
 Heap.prototype.remove = function Heap_remove( ) {
     var len = this.length;
     if (len < 1) return undefined;
-    var ret = this._list[1];
-    var itm = this._list[len];
     var _isBefore = this._isBefore;
+    var list = this._list;
+    var ret = list[1];
+    var itm = list[len];
 
     var r = 1, c = 2;
     while (c < len) {
-        var cv = this._list[c], cv1 = this._list[c+1];
+        var cv = list[c], cv1 = list[c+1];
         if (_isBefore(cv1, cv)) { c++; cv = cv1; }
         if (!(_isBefore(cv, itm))) break;
-        this._list[r] = cv;
+        list[r] = cv;
         r = c;
         c = c << 1;
     }
-    this._list[len] = 0;
+    list[len] = 0;
     this.length = --len;
-    if (len) this._list[r] = itm;
+    if (len) list[r] = itm;
     if (this._freeSpace) this._freeSpace(this._list, len);
 
     return ret;
