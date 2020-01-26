@@ -163,4 +163,5 @@ Heap.prototype._check = function Heap__check( ) {
 }
 
 // optimize access
-Heap.prototype = Heap.prototype;
+Heap.prototype = toStruct(Heap.prototype);
+function toStruct(o) { return toStruct.prototype = o }
