@@ -8,7 +8,7 @@
 var timeit = require('qtimeit');
 
 var fastpriorityqueue = require('fastpriorityqueue');
-var qheap = require('../');
+var qheap = require('./');
 var heap = require('heap');
 var jsprioqueue = require('js-priority-queue');
 
@@ -21,7 +21,7 @@ function rand(i) {
 }
 
 function testLoop() {
-    var i, b = new qheap();
+    var i, b = qheap();
     for (i = 0; i < 128; i++) { b.insert(rand(i)) }
     for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }
 }
@@ -49,13 +49,13 @@ timeit.bench({
     fastpriorityqueue_compar: function(){
         x = new fastpriorityqueue(comparAfter) },
     qheap: function(){
-        x = new qheap() },
+        x = qheap() },
 });
 **/
 
 // just creating a qheap with different compar functions cuts performance 6x
 // fastpriorityqueue same behavior
-// x = new qheap({ comparBefore: comparBefore });
+// x = qheap({ comparBefore: comparBefore });
 
 timeit.bench.preRunMessage =
     rand.toString() + "\n" +
@@ -94,7 +94,7 @@ timeit.bench({
         for (i = 128; i < 1280; i++) { b.add(rand(i)) ; b.poll() }
     },
     qheap: function(){
-        var i, b = new qheap();
+        var i, b = qheap();
         for (i = 0; i < 128; i++) { b.insert(rand(i)) }
         for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }
     },
@@ -110,12 +110,12 @@ timeit.bench({
         for (i = 128; i < 1280; i++) { b.add(rand(i)) ; b.poll() }
     },
     qheap_compar: function(){
-        var i, b = new qheap({ comparBefore: comparBefore });
+        var i, b = qheap({ comparBefore: comparBefore });
         for (i = 0; i < 128; i++) { b.insert(rand(i)) }
         for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }
     },
     qheap_compar2: function(){
-        var i, b = new qheap({ comparBefore: comparBefore2 });
+        var i, b = qheap({ comparBefore: comparBefore2 });
         for (i = 0; i < 128; i++) { b.insert(rand(i)) }
         for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }
     },

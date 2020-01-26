@@ -5,7 +5,7 @@
 
 var assert = require('assert');
 
-var Heap = require('../index.js');
+var Heap = require('./');
 
 module.exports = {
     setUp: function(done) {
@@ -15,7 +15,7 @@ module.exports = {
 
     'package.json should parse': function(t) {
         t.expect(1);
-        var json = require('../package.json');
+        var json = require('./package.json');
         t.ok(json.main);
         t.done();
     },
