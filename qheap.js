@@ -39,6 +39,9 @@ function Heap( opts ) {
     // 14% slower to mix ints and pointers in an array, even if deleted
     // this._list[0] = undefined;
 
+    var self = this;
+    this._sortBefore = function(a, b) { return self._isBefore(a, b) ? -1 : 1 };
+
     this.length = 0;
 }
 
@@ -128,18 +131,39 @@ Heap.prototype.copy = function copy( ) {
     return ret;
 }
 
+// sort the contents of the storage array
+// Trim the array for the sort, ensure first item is smallest, sort.
+// Note that sorted order is valid heap format.
+// Truncating the list is faster than copy-out/copy-in.
+// node-v11 and up are 5x faster to sort 1k numbers than v10.
 Heap.prototype.sort = function sort() {
     if (this.length < 3) return;
-    var isBefore = this._isBefore;
-
-    // trim the array for the sort, ensure first item is smallest, sort
-    // note that sorted order is valid heap format
-    // Truncating the list is faster than copy-out/copy-in.
-    // Note that node-v11 and up are 5x faster to sort 1k numbers than v10.
-    this._list.splice(this.length+1);
+    this._list.splice(this.length + 1);
     this._list[0] = this._list[1];
-    this._list.sort(function(a, b) { return isBefore(a, b) ? -1 : 1 });
+    this._list.sort(this._sortBefore);
     this._list[0] = 0;
+}
+
+// generate a uniformly distributed subsample of k items (Reservoir Algorithm)
+// First select the first k items, then once have k samples
+// randomly replace a selection with the i-th item i>k, with k/i probability.
+// Eg: pick 2 [1,2,3]: get [1,2], replace 3 with 2/3 probability into slot [0] or [1].
+// Note that this._list is indexed 1..N, but samples are indexed 0..k-1
+// Note: if k is much smaller than .length, would be faster to
+//   generate k unique random array indexes than N random values.
+Heap.prototype.subsample = function subsample( k, options ) {
+    options = options || {};
+    var samples = new Array();
+
+    if (k > this.length) k = this.length;
+    for (var i = 1; i <= k; i++) samples[i - 1] = this._list[i];
+    for (var i = k + 1; i <= this.length; i++) {
+        var j = Math.floor(Math.random() * i);
+        if (j < k) samples[j] = this._list[i];
+    }
+
+    if (options.sort) samples.sort(this._sortBefore);
+    return samples;
 }
 
 /*
@@ -173,7 +197,7 @@ Heap.prototype._trimArraySize = function Heap__trimArraySize( list, len ) {
 
 Heap.prototype._check = function Heap__check( ) {
     var isBefore = this._isBefore;
-    var _compar = function(a, b) { return isBefore(a, b) ? -1 : 1 };
+    var _compar = this._sortBefore;
 
     var i, p, fail = 0;
     for (i=this.length; i>1; i--) {

@@ -186,13 +186,86 @@ module.exports = {
         var l1 = new Heap();
         l1.sort();
         t.deepEqual(l1.toArray(), []);
+
         l1.push(3);
+        l1.sort();
+        t.deepEqual(l1.toArray(), [3]);
+
         l1.push(2);
+        l1.sort();
+        t.deepEqual(l1.toArray(), [2, 3]);
+
         l1.push(1);
         t.deepEqual(l1.toArray(), [1, 3, 2]);
         l1.sort();
         t.deepEqual(l1.toArray(), [1, 2, 3]);
+        t.equal(l1.shift(), 1);
+        t.equal(l1.shift(), 2);
+        t.equal(l1.shift(), 3);
+
+        var l2 = new Heap();
+        for (var i=0; i<1000; i++) l2.insert(Math.random());
+        var timeit = require('qtimeit');
+        timeit(1000, function() { l2.sort() });
+
         t.done();
+    },
+
+    'subsample': {
+        'should subsample': function(t) {
+            sampleit([], -1, 0);
+            sampleit([], 0, 0);
+            sampleit([], 1, 0);
+
+            sampleit([1], 0, 0);
+            sampleit([1], 1, 1);
+            sampleit([1], 3, 1);
+            sampleit([1, 2], 1, 1);
+            sampleit([1, 2], 2, 2);
+
+            sampleit([1, 2, 3, 4], -1, 0);
+            sampleit([1, 2, 3, 4], 0, 0);
+            sampleit([1, 2, 3, 4], 1, 1);
+            sampleit([1, 2, 3, 4], 2, 2);
+            sampleit([1, 2, 3, 4], 4, 4);
+            sampleit([1, 2, 3, 4], 5, 4);
+            sampleit([1, 2, 3, 4], 99, 4);
+
+            h = new Heap();
+            insertArray(h, [3, 2, 1]);
+            t.deepEqual(h.subsample(3), [1, 3, 2]);
+            t.deepEqual(h.subsample(3, { sort: true }), [1, 2, 3]);
+
+            t.done();
+
+            function sampleit(array, limit, length) {
+                var h = new Heap();
+                insertArray(h, array);
+                for (var i=0; i<100; i++) {
+                    var samp = h.subsample(limit).sort();
+                    t.equal(samp.length, length);
+                    t.contains(array, samp);
+                }
+            }
+        },
+
+        'should subsample fairly': function(t) {
+            var h = new Heap();
+            var counts = [];
+
+            for (var i=1; i<10; i++) { h.insert(i); counts[i] = 0 }
+
+            for (var i=0; i<100000; i++) {
+                var samp = h.subsample(2);
+                counts[samp[0]] += 1;
+                counts[samp[1]] += 1;
+            }
+            var min = Math.min.apply(null, counts.slice(1));
+            var max = Math.max.apply(null, counts.slice(1));
+            // no more than 1% over 100k
+            t.ok(max - min < 1000);
+            t.done();
+        },
     },
 
     'gc': {
