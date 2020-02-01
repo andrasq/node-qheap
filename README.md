@@ -93,6 +93,7 @@ a loop over the elements:
 
     array.forEach((e) => heap.insert(e));
 
+
 Performance
 -----------
 
@@ -123,7 +124,7 @@ Running the `fastpriorityqueue` benchmark:
 Changelog
 ---------
 
-- 1.5.0 - toArray method, simplify file hierarchy
+- 1.5.0 - experimental toArray, copy methods; simplify file hierarchy
 - 1.4.1 - minor speedups, backfill changelog
 - 1.4.0 - add test tools to devDependencies
 - 1.3.4 - 100% test coverage

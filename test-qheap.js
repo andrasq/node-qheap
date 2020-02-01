@@ -7,6 +7,10 @@ var assert = require('assert');
 
 var Heap = require('./');
 
+function insertArray( l, a ) {
+    for (var i=0; i<a.length; i++) l.insert(a[i]);
+}
+
 module.exports = {
     setUp: function(done) {
         this.cut = new Heap();
@@ -157,6 +161,37 @@ module.exports = {
         l.insert(3);
         l.insert(4);
         t.deepEqual(l.toArray().sort(), [1, 2, 3, 4]);
+        t.deepEqual(l.toArray(0).sort(), []);
+        t.deepEqual(l.toArray(1).sort(), [1]);
+        t.deepEqual(l.toArray(2).sort(), [1, 2]);
+        t.done();
+    },
+
+    'should copy': function(t) {
+        var l1 = new Heap();
+        l1.push(1);
+        l1.push(2);
+        l1.push(3);
+        l1.otherProperty = 123;
+        var l2 = l1.copy();
+        l2.pop();
+        l2.push(0);
+        t.deepEqual(l1.toArray().sort(), [1,2,3]);
+        t.deepEqual(l2.toArray().sort(), [0,2,3]);
+        t.strictEqual(l2.otherProperty, undefined);
+        t.done();
+    },
+
+    'should sort': function(t) {
+        var l1 = new Heap();
+        l1.sort();
+        t.deepEqual(l1.toArray(), []);
+        l1.push(3);
+        l1.push(2);
+        l1.push(1);
+        t.deepEqual(l1.toArray(), [1, 3, 2]);
+        l1.sort();
+        t.deepEqual(l1.toArray(), [1, 2, 3]);
         t.done();
     },
 

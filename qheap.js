@@ -4,7 +4,7 @@
  * Items are stored in a balanced binary tree packed into an array where
  * node is at [i], left child is at [2*i], right at [2*i+1].  Root is at [1].
  *
- * Copyright (C) 2014-2017 Andras Radics
+ * Copyright (C) 2014-2020 Andras Radics
  * Licensed under the Apache License, Version 2.0
  */
 
@@ -17,6 +17,13 @@ function isBeforeDefault( a, b ) { return a < b; }
 function Heap( opts ) {
     if (!(this instanceof Heap)) return new Heap(opts);
 
+    this.options = !opts ? {} : {
+        compar: opts.compar,
+        comparBefore: opts.comparBefore,
+        freeSpace: opts.freeSpace,
+        size: opts.size,
+    };
+
     opts = opts || {};
     if (typeof opts === 'function') opts = {compar: opts};
 
@@ -27,9 +34,12 @@ function Heap( opts ) {
     } else {
         this._isBefore = isBeforeDefault;
     }
-    this.length = 0;
     this._freeSpace = opts.freeSpace ? this._trimArraySize : false;
     this._list = new Array(opts.size || 20);
+    // 14% slower to mix ints and pointers in an array, even if deleted
+    // this._list[0] = undefined;
+
+    this.length = 0;
 }
 
 Heap.prototype._list = null;
@@ -108,8 +118,30 @@ Heap.prototype.shift = Heap.prototype.remove;
 Heap.prototype.pop = Heap.prototype.remove;
 Heap.prototype.dequeue = Heap.prototype.remove;
 
-Heap.prototype.toArray = function toArray( ) {
-    return this._list.slice(1, this.length + 1);
+Heap.prototype.toArray = function toArray( limit ) {
+    limit = typeof limit === 'number' ? limit + 1 : this.length + 1;
+    return this._list.slice(1, limit);
+}
+
+Heap.prototype.copy = function copy( ) {
+    var ret = new Heap(this.options);
+    for (var i = 1; i <= this.length; i++) ret._list[i] = this._list[i];
+    ret.length = this.length;
+    return ret;
+}
+
+Heap.prototype.sort = function sort() {
+    if (this.length < 3) return;
+    var isBefore = this._isBefore;
+
+    // trim the array for the sort, ensure first item is smallest, sort
+    // note that sorted order is valid heap format
+    // Truncating the list is faster than copy-out/copy-in.
+    // Note that node-v11 and up are 5x faster to sort 1k numbers than v10.
+    this._list.splice(this.length+1);
+    this._list[0] = this._list[1];
+    this._list.sort(function(a, b) { return isBefore(a, b) ? -1 : 1 });
+    this._list[0] = 0;
 }
 
 /*
