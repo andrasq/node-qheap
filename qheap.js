@@ -57,10 +57,9 @@ Heap.prototype.insert = function Heap_insert( item ) {
     list[idx] = item;
 
     while (idx > 1) {
-        var parentidx = idx >> 1;
-        if (!(this._isBefore(item, list[parentidx]))) break;
-        list[idx] = list[parentidx];
-        idx = parentidx;
+        if (!(this._isBefore(item, list[idx >> 1]))) break;
+        list[idx] = list[idx >> 1];
+        idx = idx >> 1;
     }
     list[idx] = item;
 };
