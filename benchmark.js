@@ -62,7 +62,7 @@ timeit.bench.preRunMessage =
     testLoop.toString() + "\n" +
     "\n" +
     "new heap + 128 inserts + 1152 insert/removes";
-timeit.bench.timeGoal = 1.0;
+timeit.bench.timeGoal = .2;
 //timeit.bench.baselineAvg = 20000 * 1280;
 //timeit.bench.forkTests = true;
 //timeit.bench.verbose = 5;
