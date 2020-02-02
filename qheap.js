@@ -28,20 +28,14 @@ function Heap( opts ) {
     };
     opts = this.options;
 
-    if (opts.compar) {
-        this._isBefore = function(a, b) { return opts.compar(a,b) < 0 };
-    } else if (opts.comparBefore) {
-        this._isBefore = opts.comparBefore;
-    } else {
-        this._isBefore = isBeforeDefault;
-    }
+    var self = this;
+    this._isBefore = opts.compar ? function(a, b) { return opts.compar(a, b) < 0 } : opts.comparBefore || isBeforeDefault;
+    this._sortBefore = opts.compar || function(a, b) { return self._isBefore(a, b) ? -1 : 1 };
     this._freeSpace = opts.freeSpace ? this._trimArraySize : false;
+
     this._list = new Array(opts.size || 20);
     // 14% slower to mix ints and pointers in an array, even if deleted
     // this._list[0] = undefined;
-
-    var self = this;
-    this._sortBefore = opts.compar || function(a, b) { return self._isBefore(a, b) ? -1 : 1 };
 
     this.length = 0;
 }
