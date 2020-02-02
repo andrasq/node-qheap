@@ -17,15 +17,16 @@ function isBeforeDefault( a, b ) { return a < b; }
 function Heap( opts ) {
     if (!(this instanceof Heap)) return new Heap(opts);
 
+    if (typeof opts === 'function') opts = {compar: opts};
+
+    // copy out known options to not bind to caller object
     this.options = !opts ? {} : {
         compar: opts.compar,
         comparBefore: opts.comparBefore,
         freeSpace: opts.freeSpace,
         size: opts.size,
     };
-
-    opts = opts || {};
-    if (typeof opts === 'function') opts = {compar: opts};
+    opts = this.options;
 
     if (opts.compar) {
         this._isBefore = function(a, b) { return opts.compar(a,b) < 0 };
@@ -40,7 +41,7 @@ function Heap( opts ) {
     // this._list[0] = undefined;
 
     var self = this;
-    this._sortBefore = function(a, b) { return self._isBefore(a, b) ? -1 : 1 };
+    this._sortBefore = opts.compar || function(a, b) { return self._isBefore(a, b) ? -1 : 1 };
 
     this.length = 0;
 }
@@ -49,6 +50,7 @@ Heap.prototype._list = null;
 Heap.prototype._compar = null;
 Heap.prototype._isBefore = null;
 Heap.prototype._freeSpace = null;
+Heap.prototype._sortBefore = null;
 Heap.prototype.length = 0;
 
 /*
