@@ -25,14 +25,14 @@ module.exports = {
     },
 
     'should expose insert/remove methods': function(t) {
-        this.cut.insert(1);
-        t.equal(this.cut.remove(), 1);
+        t.equal(typeof this.cut.insert, 'function');
+        t.equal(typeof this.cut.remove, 'function');
         t.done();
     },
 
     'should expose push/shift methods': function(t) {
-        this.cut.push(1);
-        t.equal(this.cut.shift(), 1);
+        t.equal(typeof this.cut.push, 'function');
+        t.equal(typeof this.cut.shift, 'function');
         t.done();
     },
 
@@ -45,6 +45,17 @@ module.exports = {
 
     'empty heap should return undefined': function(t) {
         assert(this.cut.remove() === undefined);
+        t.done();
+    },
+
+    'should remove': function(t) {
+        var h = new Heap();
+        insertArray(h, [4, 3, 2, 1]);
+        t.equal(h.remove(), 1);
+        t.equal(h.remove(), 2);
+        t.equal(h.remove(), 3);
+        t.equal(h.remove(), 4);
+        t.strictEqual(h.remove(), undefined);
         t.done();
     },
 
@@ -130,7 +141,8 @@ module.exports = {
     'should sort the data': function(t) {
         if (process.env.NODE_COVERAGE) return t.done();
         var i, data = [580, 253, 610, 176];
-        var nitems = 100000;
+        data[100000 - 1] = 1;
+        var nitems = data.length;
         for (i=0; i<nitems; i++) {
             data[i] = Math.random() * 1000 | 0;
             this.cut.insert(data[i]);

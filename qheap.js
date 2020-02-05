@@ -52,6 +52,9 @@ Heap.prototype.length = 0;
  */
 Heap.prototype.insert = function Heap_insert( item ) {
     var idx = ++this.length;
+    return this._bubbleup(idx, item);
+};
+Heap.prototype._bubbleup = function _bubbleup( idx, item ) {
     var list = this._list;
     list[idx] = item;
 
@@ -80,37 +83,60 @@ Heap.prototype.size = function Heap_size( ) {
  * when bubbling down, r: root idx, c: child sub-tree root idx, cv: child root value
  * Note that the child at (c == this.length) does not have to be tested in the loop,
  * since its value is the one being bubbled down, so can loop `while (c < len)`.
- *
- * Note that a redundant (c < len &&) test before the c vs c+1 compar lets node v0.10
- * run 4x faster; v4, v5 and v6 run faster without it if using _isBefore and not
- * raw _compar.
- *
- * Note that this version runs faster than the two-pass pull-up-new-root then
- * bubble-up-last-value-from-hole approach (except when inserting pre-sorted data).
  */
 Heap.prototype.remove = function Heap_remove( ) {
     var len = this.length;
     if (len < 1) return undefined;
+    return this._bubbledown(1, len);
+
+/**
+    // experiment: ripple down hole from root, bubble up last from hole
     var list = this._list;
     var ret = list[1];
-    var itm = list[len];
+    var holeIdx = this._rippleup(1, len);
+    this._bubbleup(holeIdx, list[this.length--]);
+    if (this._freeSpace) this._freeSpace(list, len);
+    return ret;
+/**/
+};
+Heap.prototype._bubbledown = function _bubbledown( r, len ) {
+    var list = this._list, ret = list[r], itm = list[len];
+    var c, _isBefore = this._isBefore;
 
-    var r = 1, c = 2, _isBefore = this._isBefore;
-    while (c < len) {
+    while ((c = r << 1) < len) {
         var cv = list[c], cv1 = list[c+1];
         if (_isBefore(cv1, cv)) { c++; cv = cv1; }
         if (!(_isBefore(cv, itm))) break;
         list[r] = cv;
         r = c;
-        c = c << 1;
     }
     list[r] = itm;
     list[len] = 0;
     this.length = --len;
-    if (this._freeSpace) this._freeSpace(this._list, len);
+    if (this._freeSpace) this._freeSpace(this._list, this.length);
 
     return ret;
 };
+/**
+Heap.prototype._rippleup = function _rippleup( r, len ) {
+    var list = this._list;
+
+    var c, _isBefore = this._isBefore;
+    while ((c = r << 1) < len) {
+        var cv = list[c];
+        var cv1 = list[c+1];
+        if (_isBefore(cv1, cv)) { cv = cv1; c = c+1 }
+        list[r] = cv;
+        r = c;
+    }
+    if (c === len) {
+        list[r] = list[c];
+        r = c;
+    }
+
+    return r;
+};
+/**/
 Heap.prototype.shift = Heap.prototype.remove;
 Heap.prototype.pop = Heap.prototype.remove;
 Heap.prototype.dequeue = Heap.prototype.remove;
@@ -127,12 +153,23 @@ Heap.prototype.copy = function copy( ) {
     return ret;
 }
 
+Heap.prototype.peekHead = function peekHead( n ) {
+    // todo: think about a more efficient approach than cloning the list
+    // todo: would be more efficient to sort the whole list if peeking at say over 50% of the items
+    var copy = this.copy();
+    var item, head = new Array();
+    while (head.length < n && (item = copy.shift()) !== undefined) {
+        head.push(item);
+    }
+    return head;
+}
+
 // sort the contents of the storage array
 // Trim the array for the sort, ensure first item is smallest, sort.
 // Note that sorted order is valid heap format.
 // Truncating the list is faster than copy-out/copy-in.
 // node-v11 and up are 5x faster to sort 1k numbers than v10.
-Heap.prototype.sort = function sort() {
+Heap.prototype.sort = function sort( ) {
     if (this.length < 3) return;
     this._list.splice(this.length + 1);
     this._list[0] = this._list[1];
