@@ -120,6 +120,19 @@ timeit.bench({
         for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }
     },
 /**/
+    'new qheap 10k': function() {
+        var h;
+        for (var i=0; i<10000; i++) h = qheap();
+    },
+    'qheap insert 10k': function() {
+        var h = qheap();
+        for (var i=0; i<10000; i++) h.insert(rand(i));
+    },
+    'qheap insert 10k / remove 10k': function() {
+        var h = qheap();
+        for (var i=0; i<10000; i++) h.insert(rand(i));
+        for (var i=0; i<10000; i++) h.shift();
+    },
 });
 timeit.bench.preRunMessage = "----";
 timeit.bench.showPlatformInfo = false;
