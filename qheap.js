@@ -141,6 +141,13 @@ Heap.prototype.shift = Heap.prototype.remove;
 Heap.prototype.pop = Heap.prototype.remove;
 Heap.prototype.dequeue = Heap.prototype.remove;
 
+// builder, not initializer: appends items, not replaces
+Heap.prototype.fromArray = function fromArray( array, base, bound ) {
+    var base = base || 0;
+    var bound = bound || array.length;
+    for (var i=base; i<bound; i++) this.insert(array[i]);
+}
+
 Heap.prototype.toArray = function toArray( limit ) {
     limit = typeof limit === 'number' ? limit + 1 : this.length + 1;
     return this._list.slice(1, limit);

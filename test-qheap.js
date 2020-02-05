@@ -163,6 +163,16 @@ module.exports = {
         t.done();
     },
 
+    'should insert fromArray': function(t) {
+        var h = new Heap();
+        h.fromArray([3]);
+        h.fromArray([2, 1]);
+        t.equal(h.shift(), 1);
+        t.equal(h.shift(), 2);
+        t.equal(h.length, 1);
+        t.done();
+    },
+
     'should convert toArray': function(t) {
         var l = new Heap();
         t.deepEqual(l.toArray(), []);
@@ -192,6 +202,19 @@ module.exports = {
         t.deepEqual(l2.toArray().sort(), [0,2,3]);
         t.strictEqual(l2.otherProperty, undefined);
         t.done();
+    },
+
+    'should peekHead': function(t) {
+        var l1 = new Heap();
+        insertArray(l1, [2, 1, 3, 5, 4]);
+        t.deepEqual(l1.peekHead(1), [1]);
+        t.deepEqual(l1.peekHead(2), [1, 2]);
+        t.deepEqual(l1.peekHead(3), [1, 2, 3]);
+        t.deepEqual(l1.peekHead(4), [1, 2, 3, 4]);
+        t.deepEqual(l1.peekHead(5), [1, 2, 3, 4, 5]);
+        t.deepEqual(l1.peekHead(6), [1, 2, 3, 4, 5]);
+        t.deepEqual(l1.toArray().sort(), [1, 2, 3, 4, 5]);
+        t.done()
     },
 
     'should sort': function(t) {
