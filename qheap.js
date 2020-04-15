@@ -57,12 +57,12 @@ Heap.prototype.insert = function Heap_insert( item ) {
 Heap.prototype._bubbleup = function _bubbleup( idx, item ) {
     var list = this._list;
     list[idx] = item;
-
-    while (idx > 1) {
-        if (!(this._isBefore(item, list[idx >> 1]))) break;
-        list[idx] = list[idx >> 1];
-        idx = idx >> 1;
-    }
+    if (idx <= 1) return;
+    do {
+        var pp = idx >>> 1;
+        if (this._isBefore(item, list[pp])) list[idx] = list[pp]; else break;
+        idx = pp;
+    } while (idx > 1);
     list[idx] = item;
 };
 Heap.prototype.append = Heap.prototype.insert;
