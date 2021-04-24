@@ -137,6 +137,7 @@ Todo
 
 - might be more efficient to periodically gc the heap on a timer instead of checking
   on every remove
+- hashify([array]), toArray(), fromArray() (emulate the common `hash` methods)
 
 
 Related Work
