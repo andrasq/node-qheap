@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2017 Andras Radics
+ * Copyright (C) 2017-2021 Andras Radics
  * Licensed under the Apache License, Version 2.0
  */
 
@@ -87,13 +87,18 @@ timeit.bench({
         for (i = 128; i < 1280; i++) { b.push(rand(i)) ; b.pop() }
     },
 **/
+    qheap: function(){
+        var i, b = qheap();
+        for (i = 0; i < 128; i++) { b.insert(rand(i)) }
+        for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }
+    },
     fastpriorityqueue: function(){
         var i, b = new fastpriorityqueue(comparAfter);
         //var i, b = new fastpriorityqueue();
         for (i = 0; i < 128; i++) { b.add(rand(i)) }
         for (i = 128; i < 1280; i++) { b.add(rand(i)) ; b.poll() }
     },
-    qheap: function(){
+    qheap2: function(){
         var i, b = qheap();
         for (i = 0; i < 128; i++) { b.insert(rand(i)) }
         for (i = 128; i < 1280; i++) { b.insert(rand(i)) ; b.remove() }

@@ -4,7 +4,7 @@
  * Items are stored in a balanced binary tree packed into an array where
  * node is at [i], left child is at [2*i], right at [2*i+1].  Root is at [1].
  *
- * Copyright (C) 2014-2020 Andras Radics
+ * Copyright (C) 2014-2021 Andras Radics
  * Licensed under the Apache License, Version 2.0
  */
 
@@ -152,6 +152,25 @@ Heap.prototype.toArray = function toArray( limit ) {
     limit = typeof limit === 'number' ? limit + 1 : this.length + 1;
     return this._list.slice(1, limit);
 }
+
+// rehash all items on the heap
+/**
+Heap.prototype.heapify = function heapify( array, presorted ) {
+    if (array) {
+        array = this._list;
+        this._list = new Array(array.length + 1);
+        this.length = array.length;
+        if (presorted) for (var i = 1; i <= array.length; i++) array[i];
+        else for (var i = 0; i < array.length; i++) this.insert(array[i]);
+    }
+    else {
+        array = this._list;
+        this._list = new Array(this.length + 1);
+        this.length = 0;
+        for (var i = 1; i <= list.length; i++) this.insert(list[i]);
+    }
+}
+**/
 
 Heap.prototype.copy = function copy( ) {
     var ret = new Heap(this.options);
